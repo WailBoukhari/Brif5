@@ -1,5 +1,6 @@
+
 -- Use the created database
-USE my_store;
+USE ELECTRONACER;
 
 -- Create a table for categories
 CREATE TABLE IF NOT EXISTS categories (
@@ -82,7 +83,7 @@ INSERT INTO products (image_url, libelle, prix_unitaire, quantite_min, quantite_
     ('appliances.jpg', 'Refrigerator', 1499.99, 2, 10, 3),
     ('appliances.jpg', 'Refrigerator', 1499.99, 2, 10, 3),
     
-
+-- @block
 -- Insert a sample user into the users table
 INSERT INTO users (identifiant, mot_de_passe) VALUES
     ('sample_user', 'sample_password');

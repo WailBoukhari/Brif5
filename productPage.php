@@ -28,10 +28,10 @@
   <body>
   <?php
 // Database connection parameters
-$host = 'your_mysql_host';
-$user = 'your_mysql_user';
-$password = 'your_mysql_password';
-$database = 'my_store';
+$host = 'localhost';
+$user = 'root';
+$password = 'Tsukiiya15987463@@';
+$database = 'ELECTRONACER';
 
 // Create a connection to the database
 $conn = new mysqli($host, $user, $password, $database);
@@ -47,7 +47,7 @@ $result = $conn->query($sql);
 
 // Display each product
 while ($row = $result->fetch_assoc()) {
-    echo '<div class="product">';
+    echo '!-- product card-->';
     echo '<img src="' . $row['image_url'] . '" alt="Product Image">';
     echo '<h2>' . $row['libelle'] . '</h2>';
     echo '<p><strong>Price:</strong> $' . $row['prix_unitaire'] . '</p>';
