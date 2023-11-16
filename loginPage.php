@@ -1,3 +1,45 @@
+<?php
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["pass_word"];
+
+    // Database connection parameters
+    $host = 'localhost';
+    $user = 'root';
+    $password = 'Tsukiiya15987463@@';
+    $database = 'ELECTRONACER';
+
+    // Create a connection to the database
+    $conn = new mysqli($host, $user, $password, $database);
+
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Fetch user from the database
+    $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $stmt->bind_result($id, $dbUsername, $dbPassword);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Verify the password
+    if (password_verify($password, $dbPassword)) {
+        $_SESSION["user_id"] = $id;
+        header("Location: homePage.php");
+        exit();
+    } else {
+        $error = "Invalid username or password";
+    }
+
+    // Close the database connection
+    $conn->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,6 +49,9 @@
     <title>Login Page</title>
   </head>
   <body>
+
+    <?php if (isset($error)) echo '<p style="color: red;">' . $error . '</p>'; ?>
+
     <section class="gradient-form h-[100vh] bg-neutral-200 dark:bg-neutral-700">
       <div class="container h-full px-24 py-5 m-auto">
         <div
@@ -48,18 +93,19 @@
                       </h4>
                     </div>
 
-                    <form>
+                    <form method="post" action="">
+
                       <p class="mb-4">Please login to your account</p>
                       <!--Username input-->
                       <div class="relative mb-4" data-te-input-wrapper-init>
                         <input
                           type="text"
                           class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                          id="exampleFormControlInput1"
+                          id="username"
                           placeholder="Username"
                         />
                         <label
-                          for="exampleFormControlInput1"
+                        for="username"
                           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
                           >Username
                         </label>
@@ -70,11 +116,11 @@
                         <input
                           type="password"
                           class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                          id="exampleFormControlInput11"
+                          id="password"
                           placeholder="Password"
                         />
                         <label
-                          for="exampleFormControlInput11"
+                          for="password"
                           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
                           >Password
                         </label>
@@ -84,7 +130,8 @@
                       <div class="mb-12 pb-1 pt-1 text-center">
                         <button
                           class="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-                          type="button"
+                          type="submit"
+                          value="Login"
                           data-te-ripple-init
                           data-te-ripple-color="light"
                           style="

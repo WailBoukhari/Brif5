@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["user_id"])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Fetch user information or perform other authenticated actions here
+$user_id = $_SESSION["user_id"];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,12 +50,12 @@
           </div>
           <div class="flex items-end justify-end sm:items-stretch">
             <div class="flex flex-shrink-0 items-center">
-              <h4 class="mr-6">NAME</h4>
+              <h4 class="mr-6"><?php echo $user_id; ?></h4>
               <a href="">
                 <i
                   class="fa-solid fa-right-from-bracket"
                   style="color: #ffffff"
-                ></i
+                ><a href="logout.php">Logout</a></i
               ></a>
             </div>
           </div>

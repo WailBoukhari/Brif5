@@ -9,7 +9,7 @@
       "server": "localhost",
       "port": 3306,
       "driver": "MySQL",
-      "name": "brif 5",
+      "name": "brif5",
       "database": "ELECTRONACER",
       "username": "root"
     }

@@ -1,4 +1,4 @@
-
+CREATE DATABASE ELECTRONACER;
 -- Use the created database
 USE ELECTRONACER;
 
@@ -22,16 +22,17 @@ CREATE TABLE IF NOT EXISTS products (
 
 -- Create a table for users
 CREATE TABLE IF NOT EXISTS users (
-    identifiant VARCHAR(255) PRIMARY KEY,
-    mot_de_passe VARCHAR(255) NOT NULL
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) PRIMARY KEY,
+    pass_word VARCHAR(255) NOT NULL
 );
-
+-- @block
 -- Insert some sample data into the categories table
 INSERT INTO categories (nom_categorie) VALUES
-    ('Electronics'),
-    ('Clothing'),
-    ('Home Appliances');
-
+    ('Laptop'),
+    ('Accessories'),
+    ('Speakers');
+-- @block
 -- Insert some sample data into the products table
 INSERT INTO products (image_url, libelle, prix_unitaire, quantite_min, quantite_stock, categorie_id) VALUES
     ('electronics.jpg', 'Laptop', 999.99, 5, 20, 1),
@@ -81,9 +82,9 @@ INSERT INTO products (image_url, libelle, prix_unitaire, quantite_min, quantite_
     ('appliances.jpg', 'Refrigerator', 1499.99, 2, 10, 3),
     ('appliances.jpg', 'Refrigerator', 1499.99, 2, 10, 3),
     ('appliances.jpg', 'Refrigerator', 1499.99, 2, 10, 3),
-    ('appliances.jpg', 'Refrigerator', 1499.99, 2, 10, 3),
+    ('appliances.jpg', 'Refrigerator', 1499.99, 2, 10, 3)
     
 -- @block
 -- Insert a sample user into the users table
-INSERT INTO users (identifiant, mot_de_passe) VALUES
-    ('sample_user', 'sample_password');
+INSERT INTO users (username, pass_word) VALUES
+    ('test', 'test');
