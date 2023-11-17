@@ -22,8 +22,7 @@ CREATE TABLE IF NOT EXISTS categories (
 );
 -- Insert some sample data into the categories table
 INSERT INTO categories (nom_categorie)
-VALUES ('All Products'),
-    ('Laptop'),
+VALUES ('Laptop'),
     ('Accessories'),
     ('Speakers');
 SET @allProductsCategoryId = LAST_INSERT_ID();
@@ -36,7 +35,6 @@ CREATE TABLE IF NOT EXISTS products (
     quantite_min INT NOT NULL,
     quantite_stock INT NOT NULL,
     categorie_id INT,
-    low_stock_threshold INT,
     FOREIGN KEY (categorie_id) REFERENCES categories(categorie_id)
 );
 -- Insert some sample data into the products table
@@ -46,7 +44,7 @@ INSERT INTO products (
         prix_unitaire,
         quantite_min,
         quantite_stock,
-        categorie_id
+        categorie_id,
     )
 VALUES (
         'assets/imgs/laptopimg.jpg',
@@ -54,7 +52,7 @@ VALUES (
         999.99,
         5,
         3,
-        1
+        1 -- Laptop category ID
     ),
     (
         'assets/imgs/laptopimg.jpg',
@@ -121,60 +119,12 @@ VALUES (
         1
     ),
     (
-        'assets/imgs/laptopimg.jpg',
-        'Laptop',
-        999.99,
-        5,
-        20,
-        1
-    ),
-    (
-        'assets/imgs/laptopimg.jpg',
-        'Laptop',
-        999.99,
-        5,
-        20,
-        1
-    ),
-    (
-        'assets/imgs/laptopimg.jpg',
-        'Laptop',
-        999.99,
-        5,
-        20,
-        1
-    ),
-    (
-        'assets/imgs/laptopimg.jpg',
-        'Laptop',
-        999.99,
-        5,
-        20,
-        1
-    ),
-    (
-        'assets/imgs/laptopimg.jpg',
-        'Laptop',
-        999.99,
-        5,
-        20,
-        1
-    ),
-    (
-        'assets/imgs/laptopimg.jpg',
-        'Laptop',
-        999.99,
-        5,
-        20,
-        1
-    ),
-    (
-        'assets/imgs/laptopimg.jpg',
-        'Laptop',
-        999.99,
-        5,
-        20,
-        1
+        'assets/imgs/accimg.jpg',
+        'Accessories',
+        19.99,
+        10,
+        3,
+        2 -- Accessories category ID
     ),
     (
         'assets/imgs/accimg.jpg',
@@ -198,70 +148,6 @@ VALUES (
         19.99,
         10,
         3,
-        2
-    ),
-    (
-        'assets/imgs/accimg.jpg',
-        'Accessories',
-        19.99,
-        10,
-        3,
-        2
-    ),
-    (
-        'assets/imgs/accimg.jpg',
-        'Accessories',
-        19.99,
-        10,
-        50,
-        2
-    ),
-    (
-        'assets/imgs/accimg.jpg',
-        'Accessories',
-        19.99,
-        10,
-        50,
-        2
-    ),
-    (
-        'assets/imgs/accimg.jpg',
-        'Accessories',
-        19.99,
-        10,
-        50,
-        2
-    ),
-    (
-        'assets/imgs/accimg.jpg',
-        'Accessories',
-        19.99,
-        10,
-        50,
-        2
-    ),
-    (
-        'assets/imgs/accimg.jpg',
-        'Accessories',
-        19.99,
-        10,
-        50,
-        2
-    ),
-    (
-        'assets/imgs/accimg.jpg',
-        'Accessories',
-        19.99,
-        10,
-        50,
-        2
-    ),
-    (
-        'assets/imgs/accimg.jpg',
-        'Accessories',
-        19.99,
-        10,
-        50,
         2
     ),
     (
@@ -310,7 +196,7 @@ VALUES (
         1499.99,
         2,
         10,
-        3
+        3 -- Speakers category ID
     ),
     (
         'assets/imgs/speakerimg.jpg',
@@ -366,30 +252,6 @@ VALUES (
         1499.99,
         2,
         1,
-        3
-    ),
-    (
-        'assets/imgs/speakerimg.jpg',
-        'Speakers',
-        1499.99,
-        2,
-        10,
-        3
-    ),
-    (
-        'assets/imgs/speakerimg.jpg',
-        'Speakers',
-        1499.99,
-        2,
-        10,
-        3
-    ),
-    (
-        'assets/imgs/speakerimg.jpg',
-        'Speakers',
-        1499.99,
-        2,
-        10,
         3
     ),
     (
@@ -424,5 +286,3 @@ VALUES (
         10,
         3
     );
-UPDATE products
-SET categorie_id = @allProductsCategoryId;

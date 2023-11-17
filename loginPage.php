@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($result->num_rows == 1) {
     // Login successful
     $_SESSION['username'] = $username;
-    header("Location: User.php");
+    header("Location: productPage.php");
     exit();
   } else {
     // Login failed

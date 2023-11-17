@@ -25,6 +25,30 @@ if ($categoryFilter) {
   // If no category filter is applied, show all products
   $result = $conn->query("SELECT * FROM products");
 }
+// Check if the "Show Low on Stock Products" button is pressed
+if (isset($_GET['show_low_stock'])) {
+  $lowStockThreshold = 10; // Set your desired threshold
+  $sql = "SELECT * FROM products WHERE quantite_stock < ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $lowStockThreshold);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $stmt->close();
+} else {
+  // If the button is not pressed, show products based on the selected category filter or all products
+  if ($categoryFilter) {
+    $sql = "SELECT * FROM products WHERE categorie_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $categoryFilter);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+  } else {
+    // If no category filter is applied and "Show Low on Stock Products" is not pressed, show all products
+    $result = $conn->query("SELECT * FROM products");
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,13 +125,13 @@ if ($categoryFilter) {
             <div class="flex flex-shrink-0 items-center">
               <!-- Add this inside your navigation section -->
               <ul>
+                <li><a href='productPage.php?category=0'>SHOW ALL</a></li>
                 <?php
                 while ($category = $categoriesResult->fetch_assoc()) {
                   $categoryId = $category['categorie_id'];
                   $categoryName = $category['nom_categorie'];
                   $categoryLink = "productPage.php?category=$categoryId";
-                  $activeClass = ($categoryId == $categoryFilter) ? 'active' : '';
-                  echo "<li><a href='$categoryLink' class='$activeClass'>$categoryName</a></li>";
+                  echo "<li><a href='$categoryLink' >$categoryName</a></li>";
                 }
                 ?>
               </ul>
@@ -116,14 +140,17 @@ if ($categoryFilter) {
           </div>
           <div class="flex items-end justify-end sm:items-stretch">
             <div class="flex flex-shrink-0 items-center">
-              <input type="hidden" name="show_low_stock" value="1" />
-              <button type="submit">Show Low on Stock Products</button>
+              <form method="get" action="productPage.php">
+                <input type="hidden" name="show_low_stock" />
+                <button type="submit">Show Low on Stock Products</button>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </nav>
     <div class="flex flex-wrap justify-center">
+
       <?php
       // Display each product
       while ($row = $result->fetch_assoc()) {
