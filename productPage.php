@@ -102,7 +102,7 @@ if (isset($_GET['show_low_stock'])) {
         <div class="flex items-end justify-end sm:items-stretch">
           <div class="flex flex-shrink-0 items-center">
             <h4 class="mr-6"><?php echo $user; ?></h4>
-
+            <a href="loginPage.php"> <i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i></a>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@ if (isset($_GET['show_low_stock'])) {
         background-size: cover;
       " class="text-white h-[40vh] flex">
     <div class="m-auto">
-      <h1 class="font-bold text-8xl w-1/2 my-32">OUR PRODUCTS</h1>
+      <h1 class="font-bold text-8xl w-1/2">OUR PRODUCTS</h1>
     </div>
   </section>
   <section class="dark:bg-neutral-800">
@@ -125,7 +125,7 @@ if (isset($_GET['show_low_stock'])) {
             <div class="flex flex-shrink-0 items-center">
               <!-- Add this inside your navigation section -->
               <ul>
-                <li><a href='productPage.php?category=0'>SHOW ALL</a></li>
+                <li><a href='productPage.php'>Show All</a></li>
                 <?php
                 while ($category = $categoriesResult->fetch_assoc()) {
                   $categoryId = $category['categorie_id'];
@@ -135,7 +135,6 @@ if (isset($_GET['show_low_stock'])) {
                 }
                 ?>
               </ul>
-
             </div>
           </div>
           <div class="flex items-end justify-end sm:items-stretch">
